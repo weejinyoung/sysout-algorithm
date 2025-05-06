@@ -1,20 +1,23 @@
-public class Solution {
+import java.util.*;
+
+class Solution {
     public String solution(String number, int k) {
-        StringBuilder builder = new StringBuilder();
-        int idx = 0;
-        int max;
+        Stack<String> stack = new Stack<>();
+        String[] numberArr = number.split("");
         
-        for(int i = 0; i < number.length()-k; i++){
-            max = 0;
-            for(int j = idx; j <= i+k; j++){
-                if(max < number.charAt(j)-'0'){
-                    max = number.charAt(j)-'0';
-                    idx = j+1;
-                }
+        for (String numberElmnt : numberArr) {
+            int current = Integer.parseInt(numberElmnt);
+    
+            while (!stack.isEmpty() && Integer.parseInt(stack.peek()) < current && k > 0) {
+                stack.pop();
+                k--;
             }
-            builder.append(max);
+            stack.push(numberElmnt);
         }
-        
-        return builder.toString();
+        while(k > 0) {
+            stack.pop();
+            k--;
+        }
+        return stack.toString().replaceAll("[^0-9]", "");
     }
 }
