@@ -4,31 +4,22 @@ import java.io.*;
 class Solution {
     
     String[] alphabats = {"A", "E", "I", "O", "U"};
-    TreeSet<String> dictionary = new TreeSet<>();
-    int result = 0;
+    List<String> dictionary = new ArrayList<>();
     
     public int solution(String word) {
         dfs(0, "");
-        int count = 1;
-        for(String elmnt : dictionary) {
-            if(word.equals(elmnt)) {
-                return count;
-            }
-            count++;
-        }
-        return 0;
+        return dictionary.indexOf(word) + 1;
     }
     
     public void dfs(int depth, String current) {
-        if(depth > 4) {
-            if(!current.equals("")) {
-                dictionary.add(current);
-            }
+        if(depth > 0) {
+            dictionary.add(current);
+        }
+        if(depth == 5) {
             return;
         }
         for(int i = 0; i < alphabats.length; i++) {
             dfs(depth + 1, current + alphabats[i]);
-            dfs(depth + 1, current);
         }
     }
 }
